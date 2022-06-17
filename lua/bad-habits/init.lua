@@ -1,3 +1,5 @@
+require "../messages"
+
 local M = {}
 
 local width = 50
@@ -14,8 +16,13 @@ local opts = {
 }
 
 M.show_warning = function()
+    for k, v in ipairs(MESSAGES) do
+        print(v)
+    end
     local buffer = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_open_win(buffer, true, opts)
 end
+
+M.show_warning()
 
 return M
