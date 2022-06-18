@@ -20,16 +20,29 @@ local random_message_index = function()
     return math.random(#MESSAGES)
 end
 
+local fill_buffer = function()
+    local line = string.rep("-", width)
+    local filler = {}
+
+    for lines = 1, height do
+        table.insert(filler, line)
+    end
+    return filler
+end
+
 M.show_warning = function()
     local buffer = vim.api.nvim_create_buf(false, true)
     local message = MESSAGES[random_message_index()]
+    local buffer_content = fill_buffer()
 
     -- get the key that triggered the warning
     --
     -- get suggestion for alternative keystroke
     --
 
-    vim.api.nvim_buf_set_lines(buffer, 0, 0, false, {message})
+
+    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, buffer_content)
+    --vim.api.nvim_buf_set_text(buffer, 5, 5, 5, 5, {message})
     vim.api.nvim_open_win(buffer, true, opts)
 end
 
