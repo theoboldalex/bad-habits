@@ -30,12 +30,13 @@ local fill_buffer = function()
     return filler
 end
 
-local get_text_offsets = function()
+local get_text_offsets = function(message)
+    local start_col = math.floor((width / 2) - (#message / 2))
     return {
-        start_row = 5,
-        end_row = 5,
-        start_col = 5,
-        end_col = 5
+        start_row = math.floor(height / 2),
+        end_row = math.floor(height / 2),
+        start_col = start_col,
+        end_col = start_col + #message
     }
 end
 
@@ -43,7 +44,7 @@ M.show_warning = function()
     local buffer = vim.api.nvim_create_buf(false, true)
     local buffer_content = fill_buffer()
     local message = MESSAGES[random_message_index()]
-    local message_offsets = get_text_offsets()
+    local message_offsets = get_text_offsets(message)
     -- get the key that triggered the warning
     --
     -- get suggestion for alternative keystroke
