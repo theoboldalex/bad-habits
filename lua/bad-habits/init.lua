@@ -40,10 +40,11 @@ local get_text_offsets = function(message)
     }
 end
 
-M.show_warning = function()
+M.show_warning = function(key)
     local buffer = vim.api.nvim_create_buf(false, true)
     local buffer_content = fill_buffer()
-    local message = MESSAGES[random_message_index()]
+    local reason = string.format("Looks like you pressed the %s key.", key)
+    local message = MESSAGES[random_message_index()] .. reason
     local message_offsets = get_text_offsets(message)
     -- map keys that we see as bad habits i.e. arrow keys
     -- get the key that triggered the warning
