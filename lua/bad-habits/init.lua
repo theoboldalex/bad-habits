@@ -45,6 +45,7 @@ M.show_warning = function()
     local buffer_content = fill_buffer()
     local message = MESSAGES[random_message_index()]
     local message_offsets = get_text_offsets(message)
+    -- map keys that we see as bad habits i.e. arrow keys
     -- get the key that triggered the warning
     --
     -- get suggestion for alternative keystroke
@@ -62,6 +63,6 @@ M.show_warning = function()
     vim.api.nvim_open_win(buffer, true, opts)
 end
 
-M.show_warning()
+--M.show_warning()
 
 return M
