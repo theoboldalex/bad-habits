@@ -43,14 +43,11 @@ end
 M.show_warning = function(key)
     local buffer = vim.api.nvim_create_buf(false, true)
     local buffer_content = fill_buffer()
+
+    -- TODO: MAKE A TABLE TO HOLD THE LINES TO WRITE TO FLOATING WINDOW
     local reason = string.format("Looks like you pressed the %s key.", key)
     local message = MESSAGES[random_message_index()] .. reason
     local message_offsets = get_text_offsets(message)
-    -- map keys that we see as bad habits i.e. arrow keys
-    -- get the key that triggered the warning
-    --
-    -- get suggestion for alternative keystroke
-    --
 
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, buffer_content)
     vim.api.nvim_buf_set_text(
@@ -63,7 +60,5 @@ M.show_warning = function(key)
     )
     vim.api.nvim_open_win(buffer, true, opts)
 end
-
---M.show_warning()
 
 return M
