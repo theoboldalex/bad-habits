@@ -51,10 +51,29 @@ local write_messgage = function(buffer, lines)
     end
 end
 
+local map_window_close_keys = function(buffer)
+    local bufClosingKeys = {"<Esc>", "<CR>", "<Leader>"}
+
+    for _, key in ipairs(bufClosingKeys) do
+        vim.api.nvim_buf_set_keymap(
+            buffer,
+            "n",
+            key,
+            ":close<CR>",
+            {
+                silent=true,
+                nowait=true,
+                noremap=true
+            }
+        )
+    end
+end
+
 M.show_warning = function(key)
     local buffer = vim.api.nvim_create_buf(false, true)
     local buffer_content = fill_buffer()
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, buffer_content)
+    map_window_close_keys(buffer)
 
     local reason = string.format("Looks like you pressed the %s key.", key)
     local message = MESSAGES[random_message_index()]
