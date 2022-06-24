@@ -40,24 +40,26 @@ local get_text_offsets = function(message)
     }
 end
 
+local write_messgage = function(buffer, lines)
+    local offset = 0
+    for _, line in ipairs(lines) do
+        local start_col = math.floor((width - #line) / 2)
+        local end_col = math.floor(start_col + #line)
+        local current_row = math.floor(height / 2 - #lines / 2 + offset)
+        offset = offset + 1
+        vim.api.nvim_buf_set_text(buffer, current_row, start_col, current_row, end_col, {line})
+    end
+end
+
 M.show_warning = function(key)
     local buffer = vim.api.nvim_create_buf(false, true)
     local buffer_content = fill_buffer()
-
-    -- TODO: MAKE A TABLE TO HOLD THE LINES TO WRITE TO FLOATING WINDOW
-    local reason = string.format("Looks like you pressed the %s key.", key)
-    local message = MESSAGES[random_message_index()] .. reason
-    local message_offsets = get_text_offsets(message)
-
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, buffer_content)
-    vim.api.nvim_buf_set_text(
-        buffer, 
-        message_offsets["start_row"],
-        message_offsets["start_col"],
-        message_offsets["end_row"],
-        message_offsets["end_col"],
-        {message}
-    )
+
+    local reason = string.format("Looks like you pressed the %s key.", key)
+    local message = MESSAGES[random_message_index()]
+
+    write_messgage(buffer, {message, reason})
     vim.api.nvim_open_win(buffer, true, opts)
 end
 
