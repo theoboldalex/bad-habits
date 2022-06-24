@@ -30,16 +30,6 @@ local fill_buffer = function()
     return filler
 end
 
-local get_text_offsets = function(message)
-    local start_col = math.floor((width / 2) - (#message / 2))
-    return {
-        start_row = math.floor(height / 2),
-        end_row = math.floor(height / 2),
-        start_col = start_col,
-        end_col = start_col + #message
-    }
-end
-
 local write_messgage = function(buffer, lines)
     local offset = 0
     for _, line in ipairs(lines) do
