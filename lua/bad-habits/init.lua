@@ -21,7 +21,7 @@ local random_message_index = function()
 end
 
 local fill_buffer = function()
-    local line = string.rep("-", width)
+    local line = string.rep(" ", width)
     local filler = {}
 
     for _ = 1, height do
