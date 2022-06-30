@@ -41,6 +41,7 @@ local write_messgage = function(buffer, lines)
     end
 end
 
+-- THIS SUCKS!
 local remap_bad_habit_keys = function()
     vim.api.nvim_set_keymap("n", "<Up>", "<cmd>NaughtyBoy Up<Space>Arrow<cr>", {})
     vim.api.nvim_set_keymap("n", "<Down>", "<cmd>NaughtyBoy Down<Space>Arrow<cr>", {})
@@ -68,6 +69,7 @@ local map_window_close_keys = function(buffer)
     remap_bad_habit_keys()
 end
 
+-- THIS SUCKS TOO!
 local unmap_bad_habit_keys = function(buffer)
     vim.api.nvim_buf_set_keymap(buffer, "n", "<Up>", "<Up>", {})
     vim.api.nvim_buf_set_keymap(buffer, "n", "<Down>", "<Down>", {})
