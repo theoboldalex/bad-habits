@@ -41,6 +41,13 @@ local write_messgage = function(buffer, lines)
     end
 end
 
+local remap_bad_habit_keys = function()
+    vim.api.nvim_set_keymap("n", "<Up>", "<cmd>NaughtyBoy Up<Space>Arrow<cr>", {})
+    vim.api.nvim_set_keymap("n", "<Down>", "<cmd>NaughtyBoy Down<Space>Arrow<cr>", {})
+    vim.api.nvim_set_keymap("n", "<Left>", "<cmd>NaughtyBoy Left<Space>Arrow<cr>", {})
+    vim.api.nvim_set_keymap("n", "<Right>", "<cmd>NaughtyBoy Right<Space>Arrow<cr>", {})
+end
+
 local map_window_close_keys = function(buffer)
     local bufClosingKeys = {"<Esc>", "<CR>", "<Leader>"}
 
@@ -57,6 +64,15 @@ local map_window_close_keys = function(buffer)
             }
         )
     end
+
+    remap_bad_habit_keys()
+end
+
+local unmap_bad_habit_keys = function(buffer)
+    vim.api.nvim_buf_set_keymap(buffer, "n", "<Up>", "<Up>", {})
+    vim.api.nvim_buf_set_keymap(buffer, "n", "<Down>", "<Down>", {})
+    vim.api.nvim_buf_set_keymap(buffer, "n", "<Left>", "<Left>", {})
+    vim.api.nvim_buf_set_keymap(buffer, "n", "<Right>", "<Right>", {})
 end
 
 M.show_warning = function(key)
@@ -70,6 +86,7 @@ M.show_warning = function(key)
 
     write_messgage(buffer, {message, reason})
     vim.api.nvim_open_win(buffer, true, opts)
+    unmap_bad_habit_keys(buffer)
 end
 
 return M
