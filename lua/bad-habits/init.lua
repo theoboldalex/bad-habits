@@ -85,6 +85,8 @@ M.show_warning = function(key)
 
     local reason = string.format("Looks like you pressed the %s key.", key)
     local message = MESSAGES[random_message_index()]
+    local altKeyStroke = ""
+    local altKeySuggestion = string.format("You could try pressing %s instead.", altKeyStroke)
 
     write_messgage(buffer, {message, reason})
     vim.api.nvim_open_win(buffer, true, opts)
